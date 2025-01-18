@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<title>ETA for the Palm Pilot</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1" />
+<META NAME="author" CONTENT="Stephen Sykes" />
+<META NAME="Description" CONTENT="C programming, Esoteric programming languages, especially ETA" />
+<META NAME="Keywords" CONTENT="ruby,rails,sykes,steve,stephen,eta,esoteric,programming,befunge" />
+<LINK REL="stylesheet" TYPE="text/css" HREF="ss.css" />
+</head>
+
+<body>
+<div class="page">
+  <div class="header">
+    <a href="https://www.stephensykes.com"><img src="images/ss.com_x.gif" alt="Home"></a>
+    <span class="icons">
+      <a href="/bobbity/index.html"><img src="images/flop.gif" alt="Bobbity flop"></a>
+    </span>
+  </div>
+
+  <div class="content-outer">
+    <div class="content">
+
+<br><h2>ETA for the Palm Pilot</h2>
+
+This is the implementation of <a href="https://www.miketaylor.org.uk">Mike Taylor</a>'s <a href="https://www.miketaylor.org.uk/tech/eta/doc">ETA language</a> for Palm OS.<br /></p>
+
+<p>If you have a palm pilot, then this is ideal for when you're on a train or plane and have nothing better to do that to invent your next self-documenting eta program.</p>
+
+<p>It consists of two fully fledged palm applications (.prc files) that can be installed and used on any Palm OS device.  The first is a standalone <a href="assets/eta.prc">ETA interpreter</a>, the second is an <a href="assets/etac.prc">ETA to C translator</a> which produces programs that may then be compiled with <a href="https://www.orbworks.com">Pocket C</a>.</p>
+
+<h3 id="the-interpreter">The Interpreter</h3>
+<p>Once installed through the hotsync process (or beamed to you from another ETA fan), your screen should look something like this.  </p>
+
+<p><img src="assets/images/palm1.gif" /></p>
+
+<p>The application will consume 42k, which is mostly due to the rather large libraries that the C compiler insists on including - I am working on a solution for this, but in the
+mean time it is the smallest it can be.</p>
+
+<p><img src="assets/images/palm2.gif" /></p>
+
+<p>The ETA interpreter expects your ETA program to be in a memo entitled ETA as shown.  </p>
+
+<p>There is a limit of 256 lines on your program.  The interpreter will reject any program longer than this.  I considered this a reasonable figure, as a Palm memo can be at most 4k.  If you run into trouble, you'll need to put more characters on each line!</p>
+
+<p><img src="assets/images/palm3.gif" /></p>
+
+<p>When running, the interpreter presents a memo style form where it will write output and echo any input.  Note that this form only has a limited amount of space available - if your program produces more than a little output you'll need to press the clear button from time to time.</p>
+
+<p>In the demonstation here, I am running my cat identifier program, the complete text of which you can find below.</p>
+
+<p><img src="assets/images/palm4.gif" /></p>
+
+<p>As you can see, Tiddles did not pass the test.  The interpreter uses an alert box for errors and other messages.</p>
+
+<h3 id="test-program">Test Program</h3>
+<p>Here is my patented 1-Meow&trade; cat identifier.  Note that this program makes use of the <a href="https://www.miketaylor.org.uk/tech/eta/doc/manual.html#3.4.8">halibut instruction</a> to rotate the top <i>three</i> items on the stack, thereby proving that the instruction functions correctly (which it didn't on my first version of the interpreter!)</p>
+
+<pre>
+   ntiteo: nice cat
+   ntsseo: bad cat
+   natieo: nice cat
+   nahoeo: bad cat
+   nttaeo: nice cat
+    niieo: no such cat
+     tate: mad cat
+      ine: happy cat
+naehsnteh: nightmare cat
+    ntoes: naughty but nice cat
+   nttetn: a very fat cat
+     naee: nearly a tiger in fact
+  atnooet: a cat came - but nice or not?
+   ntiteo: nice cat
+   natheo: nice cat
+   nahteo: nice cat
+   nahoeo: nice cat
+    niieo: nice cat
+   nahteo: nice cat
+   ntsseo: nice cat
+   naaieo: nice cat
+    nineo: nice cat
+ ntoeonet: good kitty
+   ntaoeo: bad cat
+   ntsseo: bad cat
+   nahaeo: bad cat
+    niieo: bad cat
+   nahteo: bad cat
+   ntsseo: bad cat
+   naaieo: bad cat
+    nineo: bad cat
+ ntoeonet: nasty kitty
+</pre>
+
+<p>You can find some of my other ETA programming examples <a href="programs.html">here</a>.</p>
+
+<h3 id="the-eta-to-c-translator">The ETA to C Translator</h3>
+
+<p><img src="assets/images/palm5.gif" /></p>
+
+<p>After installing the translator, it should show up on your device as you can see on the left.  The translator expects your program to be stored in a memo entitled ETA2C.  After running your program through the translator, the C program output will be in a memo entitled <code>// etaout</code>.  This may then be compiled by Pocket C.</p>
+
+<p>Programs compiled in this way will run very much quicker than when using the interpreter.  These two screenshots demonstrate the improvement using <a href="https://www.miketaylor.org.uk/tech/eta/pit/hello2.eta">hello2.eta</a> as the source code.  The translator uses some simple optimisation strategies, including removing obvious no-op sequences and ignoring ends of lines that are always jumped over using sequences like AAT or NTEAT.</p>
+
+<p><img src="assets/images/palm6.gif" />
+<img src="assets/images/palm7.gif" /></p>
+
+<h3 id="source-code-for-the-interpreter">Source Code for the Interpreter</h3>
+<p>This program is written for a cross compiler called <a href="https://www.orbworks.com">Pocket C</a>.  The program is not long, only about 200 lines, and is readily readable - I even put some comments in.  </p>
+
+<p>Pocket C does not produce very fast applications - for instance the example program <a href="https://www.miketaylor.org.uk/tech/eta/pit/bottles.eta">bottles.eta</a> takes over two hours to run on my Palm V.  Therefore, you will notice that I have written the code in such a way to be as efficient as possible, at the expense of programming niceties.  On the other hand, you could always compile your programs using the translator.</p>
+
+<p>The source code is <a href="assets/eta2.pc">here</a>.  If you want to compile it, you'll also need the two icon graphics, the <a href="assets/eta-small.bmp">small one</a> and the <a href="assets/eta-large.bmp">big one</a>.</p>
+
+<h3 id="source-code-for-the-translator">Source Code for the Translator</h3>
+<p>It's pretty ugly, you probably don't what to see <a href="assets/eta3.pc">it</a>. The icons are here - the <a href="assets/eta-small-c.bmp">small one</a> and the <a href="assets/eta-large-c.bmp">big one</a>.</p>
+
+
+    </div>
+    <BR><BR><HR>
+    <div class="footer">S.D.Sykes 2001</div>
+  </div>
+</div>
+</body>
+</html>

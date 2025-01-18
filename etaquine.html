@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<title>An ETA Quine</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1" />
+<META NAME="author" CONTENT="Stephen Sykes" />
+<META NAME="Description" CONTENT="C programming, Esoteric programming languages, especially ETA" />
+<META NAME="Keywords" CONTENT="ruby,rails,sykes,steve,stephen,eta,esoteric,programming,befunge" />
+<LINK REL="stylesheet" TYPE="text/css" HREF="ss.css" />
+</head>
+
+<body>
+<div class="page">
+  <div class="header">
+    <a href="https://www.stephensykes.com"><img src="images/ss.com_x.gif" alt="Home"></a>
+    <span class="icons">
+      <a href="/bobbity/index.html"><img src="images/flop.gif" alt="Bobbity flop"></a>
+    </span>
+  </div>
+
+  <div class="content-outer">
+    <div class="content">
+
+<br><h2>An ETA Quine</h2>
+
+<p>A <a href="https://www.nyx.net/~gthompso/quine.htm">quine</a> is a program that prints itself.  It's actually a nice challenge to write one in <a href="https://www.miketaylor.org.uk/tech/eta/doc/index.html">ETA</a>.
+<p>Well, here is the first <a href="assets/qa.eta">ETA quine</a>.  And to prove it works:
+<pre>
+$ ./ceta qa.eta &gt;qout.eta
+$ ls -l q*
+-rw-r--r--   1 Administ None        13236 Feb 21 20:29 qa.eta
+-rw-r--r--   1 Administ None        13236 Feb 21 21:09 qout.eta
+$ diff qa.eta qout.eta
+$
+</pre>
+<p>The algorithm is in three parts:  First we put values on the stack corresponding to the characters that the second two parts of the program are made of.  Secondly, we print all those values in ETA format (n[htaoins]*e - to replicate the first part).  Then lastly we output all the values - which prints the rest of the program.
+<p>I recommend running it using your favourite ETA interpreter, the faster the better.  However, do <i>not</i> use <a href="sseta.html">my optimising interpreter</a> because the read phase takes *forever*.  This is because the first line is over 11000 chars long - the optimiser does not handle this at all well!
+<p>Note that if you download in windows - for example using IE - you may find that carriage returns get inserted at the end of each line.  The quine will still work, but because it only prints newlines at the end of each line, the output file size might not match.  It should still look the same though.
+
+
+    </div>
+    <BR><BR><HR>
+    <div class="footer">S.D.Sykes 2002</div>
+  </div>
+</div>
+</body>
+</html>

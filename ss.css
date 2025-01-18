@@ -1,0 +1,21 @@
+BODY { font-family:verdana; font-size:10pt; }
+TABLE { font-family:verdana; font-size:10pt;}
+P { font-family:verdana; font-size:10pt;}
+CODE {font-size:10pt;}
+PRE {font-size:10pt;}
+a { border: 0; }
+
+body {
+  margin: auto;
+  min-height: calc(100vh - 4px);
+  overflow: auto;
+  background-color: #F5F5F5;
+  border: 2px solid black;
+}
+
+.page { }
+.header { background-color: #d01010; padding: 9px 5px 5px 5px; }
+.icons { float: right;  margin: 6px 35px 2px 2px; }
+.content-outer { padding: 9px 35px 5px 35px; border-top: 2px solid black; }
+.content { max-width: 800px; }
+.footer { font-size: 8pt; padding-bottom: 22px; }

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<title>Befunge to ETA converter</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1" />
+<META NAME="author" CONTENT="Stephen Sykes" />
+<META NAME="Description" CONTENT="C programming, Esoteric programming languages, especially ETA" />
+<META NAME="Keywords" CONTENT="ruby,rails,sykes,steve,stephen,eta,esoteric,programming,befunge" />
+<LINK REL="stylesheet" TYPE="text/css" HREF="ss.css" />
+</head>
+
+<body>
+<div class="page">
+  <div class="header">
+    <a href="https://www.stephensykes.com"><img src="images/ss.com_x.gif" alt="Home"></a>
+    <span class="icons">
+      <a href="/bobbity/index.html"><img src="images/flop.gif" alt="Bobbity flop"></a>
+    </span>
+  </div>
+
+  <div class="content-outer">
+    <div class="content">
+
+<br><h2>Befunge to ETA converter</h2>
+          
+<p><img src="images/befins.gif" align="left" alt="Befunge">I got a little bit interested in Chris Pressey's <a href="https://en.wikipedia.org/wiki/Befunge">Befunge</a> language, particularly after <a href="http://www.frox25.no-ip.org/~mtve/">one crazy hacker</a> wrote a <a href="http://www.frox25.no-ip.org/~mtve/code/eso/bef/chess/">chess program</a> in it.</p>
+<img src="images/chess.png">
+<p>I thought that ETA should run chess too.  But rather than write a new chess program in ETA, which I believe would not be too hard with my <a href="etabuilder.html">ETA Builder</a> stuff, I thought it would be a bit of a challenge to run Dmitri's Befunge chess program in ETA.  So I invented a Befunge to ETA compiler.</p>
+<p>It's written in <a href="https://www.ruby-lang.org/en/">Ruby</a>, and takes Befunge source on the standard input, and produces ETA code on the standard output.  Oh, and it gives you a commentary of what it's up to on the standard error stream.  Note that you do need to also download <a href="etabuilder.html">ETA Builder</a>.</p>
+<p>After I'd built the compiler, I could run any other Befunge programs - including the wonderful <a href="wumpus.bef">Hunt the Wumpus</a> implementation by Wim Rijnders.  This is the largest Befunge program I know of.</p>
+<ul>
+<li><a href="assets/bef.rb">ETA to Befunge converter</a>
+<li><a href="assets/chess.bef">Befunge chess source</a>*
+<li>Compiled ETA chess code - <a href="assets/chess.eta.gz">gzip</a> or <a href="assets/chess.zip">winzip</a>
+<li><a href="assets/wumpus.bef">Befunge Hunt the Wumpus source</a>
+<li>Compiled ETA wumpus code - <a href="assets/wumpus.eta.gz">gzip</a> or <a href="assets/wumpus.zip">winzip</a>
+</ul>
+<p>* Note that this version of chess.bef is modified from mtve's original in order to show a progress bar when the computer makes a move.  This is because the ETA version is really pretty slow, and it's really nice to see that it is actually doing something.  I recommend using my <a href="sseta.html">optimising ETA interpreter</a> to run it as fast as possible!</p>
+
+
+    </div>
+    <BR><BR><HR>
+    <div class="footer">S.D.Sykes 2002</div>
+  </div>
+</div>
+</body>
+</html>

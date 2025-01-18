@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<title>ETA Builder</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1" />
+<META NAME="author" CONTENT="Stephen Sykes" />
+<META NAME="Description" CONTENT="C programming, Esoteric programming languages, especially ETA" />
+<META NAME="Keywords" CONTENT="ruby,rails,sykes,steve,stephen,eta,esoteric,programming,befunge" />
+<LINK REL="stylesheet" TYPE="text/css" HREF="ss.css" />
+</head>
+
+<body>
+<div class="page">
+  <div class="header">
+    <a href="https://www.stephensykes.com"><img src="images/ss.com_x.gif" alt="Home"></a>
+    <span class="icons">
+      <a href="/bobbity/index.html"><img src="images/flop.gif" alt="Bobbity flop"></a>
+    </span>
+  </div>
+
+  <div class="content-outer">
+    <div class="content">
+
+<br><h2>ETA Builder</h2>
+
+<p>This is a utility package for <a href="https://www.miketaylor.org.uk">Mike Taylor</a>'s <a href="https://www.miketaylor.org.uk/tech/eta/doc">ETA language</a>.</p>
+
+<p>This package is used by a Ruby ETA program, and produces pure ETA code output.</p>
+
+<p>This is written in Ruby - in case you haven't come across Ruby before, it is an extremely well designed object oriented programming language, which has a number of interesting features.
+To learn more visit the <a href="https://www.ruby-lang.org/en">Ruby home page</a>.</p>
+
+<p>A Ruby ETA program consists of a mixture of the normal operations you would find in any programming language, use of the features of Ruby, and some special functions that are effectively pre defined macros.  If you want to build more than trivial ETA programs, then this is probably the quickest way to do it.  You can build useful programs without actually having to write a single ETA instruction.  And combined with the <a href="/assets/etab.html">ETA Beautifier</a>, you will produce nice, readable, executable nonsense.</p>
+
+<h3 id="classes-and-methods">Classes and methods</h3>
+<p>There are these useful classes to play with:</p>
+
+<ul>
+  <li><code>EtaInt</code> - numbers stored in the stack that you can use for arithmetic and any other purpose</li>
+  <li><code>InputBlock</code> - a way of sucking an amount of input and storing it in the stack</li>
+  <li><code>Table</code> - a list of numbers that can be selected from using an index (effectively a read only array)</li>
+  <li><code>EtaArray</code> - an Array implementation that uses EtaInt - access elements using the [] and []= operators</li>
+</ul>
+
+<p>And there are the following handy methods:</p>
+
+<ul>
+  <li><code>eprint</code> - print a list of things from an eta program - numbers and strings</li>
+  <li><code>input</code> - input a character</li>
+  <li><code>input_number</code> - input a decimal number</li>
+  <li><code>eif</code> - if (condition) { }</li>
+  <li><code>eelse</code> - else { }</li>
+  <li><code>ewhile</code> - while (condition) { }</li>
+  <li><code>eexit</code> - exits from ETA by jumping to zero</li>
+  <li><code>write</code> - write the following ETA to the output, trying to keep track of the stack</li>
+  <li><code>write_raw</code> - write the following ETA to the output, ignoring the stack</li>
+  <li><code>next_line</code> - move to the next ETA output line</li>
+</ul>
+
+<h3 id="usage">Usage</h3>
+<p>Writing a Ruby ETA program is simple - you are writing code that will be read by the Ruby interpreter, so you follow the same language conventions as in regular Ruby.
+A Ruby ETA program will take the following form:</p>
+
+<pre>
+require 'eta.rb'
+
+# program goes here
+
+finish
+</pre>
+
+<p>Some things to note about using etabuilder:</p>
+
+<ul>
+  <li>EtaInts can be mixed freely with integers in arithmetic operations.  </li>
+  <li>The bitwise operations may not work correctly for negative numbers, this will be fixed in a later version.</li>
+  <li>You can use the constants <code>true</code> and <code>false</code> in conditions.</li>
+  <li>The condition logic may not work the way you expect - zero represents true, and all other values represent false.  This stems from the way that the transfer instruction works in ETA.  In general it is safer to always use a comparison or equality operator.</li>
+  <li>An <code>eelse</code> statement must immediately follow an <code>eif</code> block, like this:</li>
+</ul>
+
+<pre>
+eif (x &gt; y) {
+  eprint "x was bigger\n"
+}
+eelse {
+  eprint "x wasn't bigger\n"
+}
+</pre>
+
+<ul>
+  <li>Remember that you cannot use <code>&amp;&amp;</code> or <code>||</code> - this is due to the way that Ruby works.</li>
+  <li>You can use ! to negate the sense of a condition only at the beginning, where it will be detected:</li>
+</ul>
+
+<pre>
+eif (!(x &lt; y)) {    # legal
+}
+eif (x + y != z) {  # legal, x!=y is translated to !(x==y) by the interpreter, &amp; precedence rules apply
+}
+eif ((x==y) != z) { # undefined
+}
+</pre>
+
+<ul>
+  <li>You can define Ruby methods to make life easier:</li>
+</ul>
+
+<pre>
+def pig(z)
+  eif (z &gt; 5) {
+    eprint "Oink!"
+  }
+end
+
+pig(5)
+pig(6)
+pig(anEtaInt)
+</pre>
+
+<p>Note that this will result in three instances the comparison and print code in the output - this is not the most object code size efficient method of doing this.</p>
+
+<ul>
+  <li>It is often useful to use Ruby looping constructs, such as the following:</li>
+</ul>
+
+<pre>
+30.times do |a|
+  eprint a, " bottles were on the wall... put another one there...\n"
+end
+</pre>
+
+<p>Again, this is not efficient because the code will be repeated 30 times in the above case.</p>
+
+<ul>
+  <li>Both InputBlocks and Tables are accessed using the array index operator [].  They are read-only constructs.</li>
+</ul>
+
+<h3 id="example">Example</h3>
+<p>Just to prove the power of the ETA builder, I wrote this <a href="/assets/tictac.rb">noughts and crosses program</a>.</p>
+
+<h3 id="source-code">Source Code</h3>
+<p>You can download the program <a href="/assets/eta-rb.rb">here</a>.</p>
+
+
+    </div>
+    <BR><BR><HR>
+    <div class="footer">S.D.Sykes 2002</div>
+  </div>
+</div>
+</body>
+</html>

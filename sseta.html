@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<title>Optimising ETA interpreter in C</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1" />
+<META NAME="author" CONTENT="Stephen Sykes" />
+<META NAME="Description" CONTENT="C programming, Esoteric programming languages, especially ETA" />
+<META NAME="Keywords" CONTENT="ruby,rails,sykes,steve,stephen,eta,esoteric,programming,befunge" />
+<LINK REL="stylesheet" TYPE="text/css" HREF="ss.css" />
+</head>
+
+<body>
+<div class="page">
+  <div class="header">
+    <a href="https://www.stephensykes.com"><img src="images/ss.com_x.gif" alt="Home"></a>
+    <span class="icons">
+      <a href="/bobbity/index.html"><img src="images/flop.gif" alt="Bobbity flop"></a>
+    </span>
+  </div>
+
+  <div class="content-outer">
+    <div class="content">
+
+<br><h2>Optimising ETA interpreter in C</h2>
+          
+          <p>After writing my <a href="befunge.html">Befunge to ETA converter</a>, I had a lot of code that ran ok but was very slow under the fastest interpreter available.  I wanted to run Befunge chess under ETA much faster than this.  So I wrote a new interpreter.
+          <p>This ETA interpreter reads the ETA code, and optimises it into a compressed form where all constants and common short ETA sequences are represented by a single character.  Then the interpreter part runs this code.  It is especially quick when running converted Befunge code because I was using analysis of that ETA code when writing this.
+          <p>One other thing to note is the interesting implementation of the ETA stack - I use a doubly linked list.  This is much better than a flat array of some sort because I can halibut deep into the stack without having to shift all the elements.  Also, I implemented a kind of memory, so in cases where we are doing many halibuts in a row to retrieve and set a value deep in the stack, there is no overhead in finding the correct stack item to shift to the top.
+          <p>When running Befunge chess on this interpreter on my Linux box, the computer makes its first move in about 55 seconds.  Actually it's kind of funny to use this on converted Befunge code.  This optimiser tries its hardest combine the ETA into larger operations that can be implemented in a quick way in C.  Which is taking a step back towards the Befunge source we started with...
+          <br>
+          <ul>
+          <li><a href="assets/sseta.c">Download sseta.c</a>
+          </ul>
+
+    </div>
+    <BR><BR><HR>
+    <div class="footer">S.D.Sykes 2002</div>
+  </div>
+</div>
+</body>
+</html>
+
