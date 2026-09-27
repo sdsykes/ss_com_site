@@ -111,6 +111,8 @@
     background: #fdf3ea; color: #8a4a22; font-size: .92rem;
     border-left: 3px solid var(--sunset);
   }
+  .tip a { color: inherit; font-weight: 600; }
+  .card[id] { scroll-margin-top: 1rem; }
   .card .link {
     margin-top: auto; padding-top: 1.1rem;
     display: inline-flex; align-items: center; gap: .4rem;
@@ -302,6 +304,7 @@
           <h3>Visit Agaete</h3>
           <div class="where">The north-west coast</div>
           <p>A pretty little town with nice restaurants on the sea front. You can swim there too.</p>
+          <div class="tip">For lunch, try Las Nasas &mdash; a good fish restaurant right on the harbour (see <a href="#las-nasas">Where to eat</a>).</div>
           <a class="link" href="https://www.grancanaria.com/turismo/en/tours-around-the-island/the-northern-route/agaete/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
         </div>
       </article>
@@ -517,7 +520,7 @@
     <div class="grid">
       <article class="card">
         <div class="card-img">
-          <div class="illustration" role="img" aria-label="Illustrated sunset over the sea">Loopy's</div>
+          <img src="images/loopys.jpg" alt="The wooden terrace at Loopy's with wagon wheels and wicker lamps" loading="lazy">
           <span class="tag">Casual</span>
         </div>
         <div class="card-body">
@@ -585,13 +588,40 @@
           <a class="link" href="https://restaurante.covermanager.com/restaurante-la-caldosa/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
         </div>
       </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/nativo.jpg" alt="Wicker chairs and parasols on the terrace at Nativo, with the pool behind" loading="lazy">
+          <span class="tag">Pool &amp; lunch</span>
+        </div>
+        <div class="card-body">
+          <h3>Nativo</h3>
+          <div class="where">Ctra. la Costa 48, Moya</div>
+          <p>A great restaurant with its own little swimming pool.</p>
+          <div class="tip">Booking recommended.</div>
+          <a class="link" href="https://www.nativolaspalmas.com/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card" id="las-nasas">
+        <div class="card-img">
+          <img src="images/las-nasas.jpg" alt="Sunset over the harbour at Puerto de las Nieves, Agaete" loading="lazy">
+          <span class="tag">Fish</span>
+        </div>
+        <div class="card-body">
+          <h3>Las Nasas</h3>
+          <div class="where">Puerto de las Nieves, Agaete</div>
+          <p>A good fish restaurant in a great location. Pair it with a visit to Agaete.</p>
+          <a class="link" href="https://restaurantelasnasas.es/en/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="sign">Have a wonderful time! &mdash; Stephen &amp; Silvia</div>
-  Photos courtesy of the linked websites: grancanaria.com, hellocanaryislands.com, villagrancanaria.com, Barceló Santa Catalina, Real Club Náutico, La Caldosa, Vinófilos, Pier 19, Museo Elder, Gran Karting Club, Manuela Jimena, Qué Leche, Indio Comido, Piccola Italia, Samsara, Time and Monte Líbano. Midway photo from nuestrograndestino.es; Deliciosa Marta photo from localguidegrancanaria.com; Toma Pan y Moja photo from liveitup-laspalmas.com.
+  Photos courtesy of the linked websites: grancanaria.com, hellocanaryislands.com, villagrancanaria.com, Barceló Santa Catalina, Real Club Náutico, La Caldosa, Vinófilos, Pier 19, Museo Elder, Gran Karting Club, Manuela Jimena, Qué Leche, Indio Comido, Piccola Italia, Samsara, Time, Monte Líbano, Nativo and Las Nasas. Midway photo from nuestrograndestino.es; Deliciosa Marta photo from localguidegrancanaria.com; Toma Pan y Moja photo from liveitup-laspalmas.com.
 </footer>
 
 </body>
