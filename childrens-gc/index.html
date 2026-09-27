@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gran Canaria Adventures for Kids! 🌴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea: #0fb5d6;
+    --sea-dark: #0a7ea4;
+    --sand: #ffe7a8;
+    --sun: #ffc93c;
+    --coral: #ff6b6b;
+    --lime: #7ed957;
+    --grape: #9b5de5;
+    --pink: #f15bb5;
+    --ink: #1d3557;
+    --card: #ffffff;
+    --radius: 28px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Nunito", system-ui, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, #bdf0ff 0%, #e8fbff 30%, var(--sand) 100%);
+    overflow-x: hidden;
+  }
+  h1, h2, h3, .btn, nav a, .chip { font-family: "Fredoka", system-ui, sans-serif; }
+  img { max-width: 100%; display: block; }
+
+  /* ---------- Scroll progress bar (a little surfer rides along) ---------- */
+  .progress {
+    position: fixed; top: 0; left: 0; height: 8px; width: 0;
+    background: linear-gradient(90deg, var(--coral), var(--sun), var(--lime), var(--sea), var(--grape));
+    z-index: 100; border-radius: 0 8px 8px 0;
+  }
+  .progress::after {
+    content: "🏄"; position: absolute; right: -14px; top: -6px; font-size: 22px;
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero {
+    position: relative; min-height: 100vh; display: grid; place-items: center;
+    text-align: center; padding: 6rem 1rem 10rem; overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(13, 60, 110, .15), rgba(13, 60, 110, .45)),
+      url("images/hero.jpg") center / cover no-repeat;
+    color: #fff;
+  }
+  .sun {
+    position: absolute; top: 6%; right: 8%; width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, #fff6c2 0%, var(--sun) 60%, #ffae00 100%);
+    box-shadow: 0 0 60px 20px rgba(255, 201, 60, .6);
+    animation: spin 30s linear infinite, pulse 3s ease-in-out infinite;
+  }
+  .sun::before {
+    content: ""; position: absolute; inset: -30px; border-radius: 50%;
+    background: repeating-conic-gradient(rgba(255, 220, 90, .7) 0 10deg, transparent 10deg 30deg);
+    z-index: -1;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse { 50% { box-shadow: 0 0 90px 35px rgba(255, 201, 60, .7); } }
+
+  .cloud {
+    position: absolute; font-size: 5rem; opacity: .9; filter: drop-shadow(0 6px 8px rgba(0,0,0,.15));
+    animation: drift linear infinite;
+  }
+  .cloud.c1 { top: 12%; animation-duration: 38s; }
+  .cloud.c2 { top: 28%; font-size: 3.5rem; animation-duration: 52s; animation-delay: -20s; }
+  .cloud.c3 { top: 5%; font-size: 4rem; animation-duration: 45s; animation-delay: -35s; }
+  @keyframes drift { from { left: -15%; } to { left: 110%; } }
+
+  .hero-inner { position: relative; z-index: 2; max-width: 900px; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 8vw, 5.5rem); line-height: 1; margin: 0 0 1rem;
+    text-shadow: 0 5px 0 var(--sea-dark), 0 10px 25px rgba(0,0,0,.35);
+  }
+  .hero h1 .word { display: inline-block; animation: popIn .8s cubic-bezier(.2, 1.6, .4, 1) both; }
+  .hero h1 .word:nth-child(2) { animation-delay: .15s; color: var(--sun); }
+  .hero h1 .word:nth-child(3) { animation-delay: .3s; }
+  .hero h1 .word:nth-child(4) { animation-delay: .45s; color: var(--sun); }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(.3) rotate(-12deg) translateY(40px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .hero p.lead {
+    font-size: clamp(1.1rem, 2.6vw, 1.6rem); font-weight: 700; margin: 0 auto 2rem; max-width: 640px;
+    text-shadow: 0 2px 10px rgba(0,0,0,.5);
+    animation: fadeUp 1s .7s both;
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: 1.2rem; font-weight: 600; text-decoration: none; cursor: pointer;
+    padding: .9rem 1.6rem; border-radius: 999px; border: none;
+    color: #fff; background: var(--coral);
+    box-shadow: 0 6px 0 #c94444, 0 12px 20px rgba(0,0,0,.2);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 9px 0 #c94444, 0 16px 24px rgba(0,0,0,.25); }
+  .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #c94444, 0 4px 8px rgba(0,0,0,.2); }
+  .btn.sea { background: var(--sea); box-shadow: 0 6px 0 var(--sea-dark), 0 12px 20px rgba(0,0,0,.2); }
+  .btn.sea:hover { box-shadow: 0 9px 0 var(--sea-dark), 0 16px 24px rgba(0,0,0,.25); }
+  .btn.sea:active { box-shadow: 0 2px 0 var(--sea-dark); }
+  .hero .buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeUp 1s 1s both; }
+
+  .scroll-hint {
+    position: absolute; bottom: 130px; left: 50%; transform: translateX(-50%); z-index: 3;
+    font-size: 2.5rem; animation: bounce 1.6s infinite;
+  }
+  @keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 18px); } }
+
+  /* Animated waves at bottom of hero */
+  .waves { position: absolute; bottom: -2px; left: 0; width: 100%; height: 120px; z-index: 1; }
+  .waves svg { position: absolute; bottom: 0; width: 200%; height: 100%; }
+  .waves .w1 { animation: wave 9s linear infinite; opacity: .6; }
+  .waves .w2 { animation: wave 6s linear infinite reverse; opacity: .8; }
+  .waves .w3 { animation: wave 12s linear infinite; }
+  @keyframes wave { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- Sticky emoji nav ---------- */
+  nav.nav {
+    position: sticky; top: 8px; z-index: 50; margin: 0 auto; width: max-content; max-width: 96vw;
+    display: flex; gap: .3rem; padding: .45rem; overflow-x: auto;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(10px);
+    border-radius: 999px; box-shadow: 0 8px 24px rgba(10, 126, 164, .25);
+    scrollbar-width: none;
+  }
+  nav.nav::-webkit-scrollbar { display: none; }
+  nav.nav a {
+    flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    font-size: 1.6rem; text-decoration: none; position: relative;
+    transition: transform .25s cubic-bezier(.3, 1.8, .5, 1), background .25s;
+  }
+  nav.nav a:hover { transform: scale(1.3) rotate(-8deg); background: #e6f9ff; }
+  nav.nav a.active { background: var(--sun); transform: scale(1.15); }
+  nav.nav a .tip {
+    position: absolute; top: 58px; left: 50%; transform: translateX(-50%) scale(.6);
+    white-space: nowrap; font-size: .85rem; background: var(--ink); color: #fff;
+    padding: .25rem .6rem; border-radius: 10px; opacity: 0; pointer-events: none;
+    transition: .2s;
+  }
+  nav.nav a:hover .tip { opacity: 1; transform: translateX(-50%) scale(1); }
+
+  /* ---------- Sections ---------- */
+  main section { scroll-margin-top: 70px; }
+  main { max-width: 1150px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+  .section-title { text-align: center; font-size: clamp(2rem, 5vw, 3rem); margin: 3rem 0 .5rem; }
+  .section-sub { text-align: center; font-size: 1.15rem; margin: 0 auto 2rem; max-width: 640px; }
+
+  /* Filter chips */
+  .filters { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin-bottom: 2.5rem; }
+  .chip {
+    border: 3px solid var(--ink); background: #fff; color: var(--ink); cursor: pointer;
+    font-size: 1.05rem; font-weight: 600; padding: .5rem 1.1rem; border-radius: 999px;
+    transition: transform .2s cubic-bezier(.3, 1.8, .5, 1), background .2s, color .2s;
+  }
+  .chip:hover { transform: translateY(-3px) rotate(-2deg); }
+  .chip.on { background: var(--ink); color: #fff; }
+
+  /* Adventure cards */
+  .cards { display: grid; gap: 3rem; }
+  .card {
+    --accent: var(--sea);
+    position: relative; display: grid; grid-template-columns: 1.1fr 1fr; align-items: stretch;
+    background: var(--card); border-radius: var(--radius); overflow: visible;
+    box-shadow: 0 14px 0 -4px var(--accent), 0 24px 40px rgba(29, 53, 87, .15);
+    scroll-margin-top: 90px;
+    /* reveal animation state */
+    opacity: 0; transform: translateY(60px) scale(.92) rotate(var(--tilt, -1.5deg));
+    transition: opacity .7s ease, transform .8s cubic-bezier(.2, 1.4, .4, 1), box-shadow .3s;
+  }
+  .card:nth-child(even) { grid-template-columns: 1fr 1.1fr; --tilt: 1.5deg; }
+  .card:nth-child(even) .photo { order: 2; }
+  .card.seen { opacity: 1; transform: none; }
+  .card.seen:hover { transform: translateY(-6px) rotate(calc(var(--tilt) * -.5)); }
+  .card.hidden { display: none; }
+  .card.celebrate { animation: jiggle .9s; }
+  @keyframes jiggle {
+    0%, 100% { transform: none; }
+    20% { transform: scale(1.04) rotate(-2deg); }
+    40% { transform: scale(1.04) rotate(2deg); }
+    60% { transform: scale(1.02) rotate(-1deg); }
+  }
+
+  .photo {
+    position: relative; margin: 0; overflow: hidden; min-height: 300px;
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+  .card:nth-child(even) .photo { border-radius: 0 var(--radius) var(--radius) 0; }
+  .photo img {
+    width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+    transition: transform 1.2s cubic-bezier(.2, .8, .2, 1);
+  }
+  .card:hover .photo img { transform: scale(1.08); }
+  .photo .credit {
+    position: absolute; right: 8px; bottom: 6px; font-size: .7rem; color: #fff;
+    background: rgba(0,0,0,.45); padding: 2px 8px; border-radius: 8px;
+  }
+  .photo .credit a { color: #fff; }
+
+  .number {
+    position: absolute; top: -22px; left: -14px; z-index: 3;
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    font: 700 1.8rem "Fredoka", sans-serif; color: #fff; background: var(--accent);
+    border: 5px solid #fff; box-shadow: 0 6px 14px rgba(0,0,0,.2);
+  }
+  .card:nth-child(even) .number { left: auto; right: -14px; }
+  .card.seen .number { animation: popIn .7s .3s cubic-bezier(.2, 1.6, .4, 1) both; }
+
+  .xmas-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    background: #d62828; color: #fff; font: 600 1rem "Fredoka", sans-serif;
+    padding: .35rem .8rem; border-radius: 999px; box-shadow: 0 4px 10px rgba(0,0,0,.25);
+    animation: swing 2.4s ease-in-out infinite; transform-origin: top center;
+  }
+  .card:nth-child(even) .xmas-badge { left: auto; right: 60px; }
+  @keyframes swing { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+  .info { padding: 2rem 2rem 2.2rem; display: flex; flex-direction: column; gap: .8rem; }
+  .info h3 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); margin: 0; line-height: 1.1; display: flex; gap: .6rem; align-items: center; }
+  .info h3 .emoji { font-size: 2.6rem; display: inline-block; }
+  .card.seen .info h3 .emoji { animation: wiggle 2.5s ease-in-out infinite; }
+  @keyframes wiggle { 0%, 60%, 100% { transform: rotate(0); } 70% { transform: rotate(-15deg) scale(1.15); } 80% { transform: rotate(12deg) scale(1.15); } 90% { transform: rotate(-6deg); } }
+  .info .where { margin: 0; font-weight: 700; color: var(--accent); filter: brightness(.8); }
+  .info p { margin: 0; font-size: 1.08rem; line-height: 1.6; }
+  .facts { list-style: none; padding: 0; margin: .2rem 0 0; display: grid; gap: .45rem; }
+  .facts li {
+    background: color-mix(in srgb, var(--accent) 12%, white);
+    border-radius: 14px; padding: .5rem .8rem; font-size: 1rem;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: auto; padding-top: .8rem; align-items: center; }
+  .actions .btn { font-size: 1.05rem; padding: .7rem 1.3rem; background: var(--accent);
+    box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 70%, black), 0 10px 18px rgba(0,0,0,.15); }
+  .actions .btn:hover { box-shadow: 0 9px 0 color-mix(in srgb, var(--accent) 70%, black), 0 14px 22px rgba(0,0,0,.2); }
+  .actions .btn:active { box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 70%, black); }
+
+  /* "We did it!" tick */
+  .done {
+    display: inline-flex; align-items: center; gap: .5rem; cursor: pointer; user-select: none;
+    font: 600 1.05rem "Fredoka", sans-serif;
+  }
+  .done input { position: absolute; opacity: 0; pointer-events: none; }
+  .done .box {
+    width: 34px; height: 34px; border-radius: 10px; border: 3px solid var(--ink);
+    display: grid; place-items: center; font-size: 1.3rem; background: #fff;
+    transition: transform .3s cubic-bezier(.3, 1.8, .5, 1), background .2s;
+  }
+  .done input:checked + .box { background: var(--lime); transform: rotate(-10deg) scale(1.15); }
+  .done input:checked + .box::after { content: "⭐"; }
+  .done input:focus-visible + .box { outline: 3px solid var(--grape); outline-offset: 3px; }
+  .card.is-done::after {
+    content: "WE DID IT!"; position: absolute; top: 18px; right: -10px; z-index: 4;
+    font: 700 1.1rem "Fredoka", sans-serif; color: #fff; background: var(--lime);
+    padding: .4rem 1rem; border-radius: 10px; transform: rotate(8deg);
+    box-shadow: 0 5px 12px rgba(0,0,0,.2); animation: stamp .5s cubic-bezier(.2, 1.6, .4, 1);
+  }
+  .card:nth-child(even).is-done::after { right: auto; left: -10px; transform: rotate(-8deg); }
+  @keyframes stamp { from { transform: scale(3) rotate(20deg); opacity: 0; } }
+
+  /* Score board */
+  .score {
+    text-align: center; margin: 0 auto 2rem; font: 600 1.3rem "Fredoka", sans-serif;
+  }
+  .stars { font-size: 1.8rem; letter-spacing: .15rem; }
+  .stars span { display: inline-block; filter: grayscale(1) opacity(.35); transition: filter .4s, transform .4s cubic-bezier(.3, 1.8, .5, 1); }
+  .stars span.lit { filter: none; transform: scale(1.25); }
+
+  /* ---------- Island map ---------- */
+  .map-wrap {
+    position: relative; max-width: 620px; margin: 0 auto 1rem;
+    background: radial-gradient(circle at 50% 45%, #7fe3f5 0%, var(--sea) 70%);
+    border-radius: 40px; padding: 1rem; box-shadow: inset 0 0 40px rgba(0,0,0,.15), 0 16px 30px rgba(10,126,164,.3);
+    overflow: hidden;
+  }
+  .map-wrap svg { width: 100%; height: auto; display: block; }
+  .island { fill: #f7d98b; stroke: #fff; stroke-width: 6; }
+  .island-green { fill: #9ad96b; }
+  .mountain { fill: #b58a5a; }
+  .pin { cursor: pointer; }
+  .pin circle { transition: r .2s; }
+  .pin:hover circle, .pin:focus circle { r: 22; }
+  .pin text { pointer-events: none; }
+  .pin .bob { animation: bob 2s ease-in-out infinite; transform-box: fill-box; }
+  @keyframes bob { 50% { transform: translateY(-6px); } }
+  .map-sea-label { font: 600 20px "Fredoka", sans-serif; fill: rgba(255,255,255,.8); }
+  .boat { animation: sail 14s ease-in-out infinite alternate; }
+  @keyframes sail { from { transform: translate(0, 0); } to { transform: translate(380px, 10px); } }
+  .fish { animation: swim 9s linear infinite; }
+  @keyframes swim { from { transform: translateX(620px); } to { transform: translateX(-80px); } }
+
+  /* ---------- Snow (for Christmas cards) ---------- */
+  .snowflake {
+    position: fixed; top: -30px; z-index: 60; pointer-events: none; color: #fff;
+    text-shadow: 0 0 6px rgba(0, 90, 160, .6);
+    animation: fall linear forwards;
+  }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+  /* Confetti */
+  .confetti {
+    position: fixed; width: 10px; height: 14px; z-index: 200; pointer-events: none; border-radius: 3px;
+    animation: confetti 1.4s cubic-bezier(.2, .6, .4, 1) forwards;
+  }
+  @keyframes confetti {
+    to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+  }
+
+  /* Random picker */
+  .random-box { text-align: center; margin: 1rem 0 3rem; }
+  .dice { display: inline-block; }
+  .rolling .dice { animation: roll .6s linear infinite; }
+  @keyframes roll { to { transform: rotate(360deg); } }
+
+  footer {
+    text-align: center; padding: 3rem 1rem 4rem; background: var(--ink); color: #dfe9f5;
+    font-size: .95rem; position: relative;
+  }
+  footer h2 { color: #fff; margin-top: 0; }
+  footer a { color: var(--sun); }
+  footer details { max-width: 780px; margin: 1.5rem auto 0; text-align: left; }
+  footer summary { cursor: pointer; text-align: center; font-weight: 700; }
+  footer ul { line-height: 1.7; }
+  .back-top { position: fixed; right: 18px; bottom: 18px; z-index: 70; opacity: 0; transform: scale(0);
+    transition: .35s cubic-bezier(.3, 1.8, .5, 1); font-size: 1.6rem; padding: .7rem 1rem; }
+  .back-top.show { opacity: 1; transform: scale(1); }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 760px) {
+    .card, .card:nth-child(even) { grid-template-columns: 1fr; }
+    .card:nth-child(even) .photo { order: 0; }
+    .photo, .card:nth-child(even) .photo { border-radius: var(--radius) var(--radius) 0 0; min-height: 230px; }
+    .info { padding: 1.4rem 1.3rem 1.8rem; }
+    .card:nth-child(even) .number { right: auto; left: -8px; }
+    .number { left: -8px; }
+    .card:nth-child(even) .xmas-badge { right: auto; left: 60px; }
+    .xmas-badge { left: 60px; }
+    .sun { width: 80px; height: 80px; }
+    nav.nav a { width: 42px; height: 42px; font-size: 1.35rem; }
+    nav.nav a .tip { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .card { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="cloud c1" aria-hidden="true">☁️</div>
+  <div class="cloud c2" aria-hidden="true">☁️</div>
+  <div class="cloud c3" aria-hidden="true">☁️</div>
+
+  <div class="hero-inner">
+    <h1>
+      <span class="word">Gran</span>
+      <span class="word">Canaria</span><br>
+      <span class="word">Kids'</span>
+      <span class="word">Adventures!</span>
+    </h1>
+    <p class="lead">10 super fun things to do on our sunny island — beaches, water slides, racing karts, sharks, sand sculptures and more! 🌴☀️🐠</p>
+    <div class="buttons">
+      <a class="btn" href="#adventures">🚀 Let's go!</a>
+      <a class="btn sea" href="#map">🗺️ See the map</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">👇</div>
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 2880 120" preserveAspectRatio="none"><path fill="#7fe3f5" d="M0 60 Q 180 10 360 60 T 720 60 T 1080 60 T 1440 60 T 1800 60 T 2160 60 T 2520 60 T 2880 60 V120 H0 Z"/></svg>
+    <svg class="w2" viewBox="0 0 2880 120" preserveAspectRatio="none"><path fill="#bdf0ff" d="M0 75 Q 240 35 480 75 T 960 75 T 1440 75 T 1920 75 T 2400 75 T 2880 75 V120 H0 Z"/></svg>
+    <svg class="w3" viewBox="0 0 2880 120" preserveAspectRatio="none"><path fill="#bdf0ff" d="M0 95 Q 120 75 240 95 T 480 95 T 720 95 T 960 95 T 1200 95 T 1440 95 T 1680 95 T 1920 95 T 2160 95 T 2400 95 T 2640 95 T 2880 95 V120 H0 Z"/></svg>
+  </div>
+</header>
+
+<nav class="nav" id="nav" aria-label="Jump to an adventure">
+  <a href="#karting" data-for="karting">🏎️<span class="tip">Go Karting</span></a>
+  <a href="#amadores" data-for="amadores">🏖️<span class="tip">Amadores Beach</span></a>
+  <a href="#rockpools" data-for="rockpools">🦀<span class="tip">Rock Pools</span></a>
+  <a href="#aqualand" data-for="aqualand">💦<span class="tip">Aqualand</span></a>
+  <a href="#planeta" data-for="planeta">🎄<span class="tip">Planeta Gran Canaria</span></a>
+  <a href="#canteras" data-for="canteras">🤿<span class="tip">Las Canteras</span></a>
+  <a href="#sand" data-for="sand">⛄<span class="tip">Sand Sculptures</span></a>
+  <a href="#poema" data-for="poema">🦈<span class="tip">Poema del Mar</span></a>
+  <a href="#holiday" data-for="holiday">🎡<span class="tip">Holiday World</span></a>
+  <a href="#arenas" data-for="arenas">🎳<span class="tip">Las Arenas</span></a>
+</nav>
+
+<main>
+
+  <!-- ================= MAP ================= -->
+  <section id="map">
+    <h2 class="section-title">🗺️ Where is everything?</h2>
+    <p class="section-sub">Tap a number on the island to jump to that adventure!</p>
+
+    <div class="map-wrap">
+      <svg viewBox="0 0 600 560" role="img" aria-label="Cartoon map of Gran Canaria with numbered adventure spots">
+        <!-- sea extras -->
+        <g class="fish" aria-hidden="true"><text x="0" y="520" font-size="30">🐟</text></g>
+        <g class="boat" aria-hidden="true"><text x="40" y="60" font-size="34">⛵</text></g>
+        <text class="map-sea-label" x="30" y="300" transform="rotate(-70 30 300)">Atlantic Ocean</text>
+        <text x="430" y="250" font-size="26" aria-hidden="true">🐬</text>
+
+        <!-- island: roughly round, with a little bump for La Isleta up top-right -->
+        <path class="island" d="M300 70
+          C 360 60 410 75 440 95
+          C 455 70 490 55 505 80 C 515 100 495 120 470 125
+          C 505 165 520 215 520 270
+          C 522 350 490 420 430 465
+          C 380 500 320 512 265 500
+          C 200 488 140 450 105 390
+          C 75 335 70 270 90 210
+          C 110 150 160 105 215 85
+          C 245 74 272 72 300 70 Z"/>
+        <path class="island-green" d="M300 140 C 360 140 420 190 430 250 C 440 320 390 380 320 390 C 250 400 180 360 170 290 C 160 220 230 140 300 140 Z" opacity=".75"/>
+        <!-- mountains in the middle -->
+        <polygon class="mountain" points="255,300 290,225 325,300"/>
+        <polygon class="mountain" points="300,300 335,245 370,300" opacity=".85"/>
+        <polygon points="281,245 290,225 299,245" fill="#fff"/>
+        <text x="258" y="330" font-size="15" font-weight="600" font-family="Fredoka" fill="#6b4a2b">Roque Nublo</text>
+
+        <!-- town labels -->
+        <text x="330" y="185" font-size="16" font-family="Fredoka" font-weight="600" fill="#1d3557">Las Palmas</text>
+        <text x="100" y="185" font-size="16" font-family="Fredoka" font-weight="600" fill="#1d3557">Agaete</text>
+        <text x="265" y="530" font-size="16" font-family="Fredoka" font-weight="600" fill="#fff">Maspalomas</text>
+        <text x="95" y="455" font-size="16" font-family="Fredoka" font-weight="600" fill="#1d3557">Puerto Rico</text>
+
+        <!-- pins: data-target matches card ids -->
+        <g class="pin" data-target="karting" tabindex="0" role="link" aria-label="1 Go Karting">
+          <g class="bob"><circle cx="435" cy="420" r="18" fill="#ff6b6b" stroke="#fff" stroke-width="4"/><text x="435" y="427" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">1</text></g></g>
+        <g class="pin" data-target="amadores" tabindex="0" role="link" aria-label="2 Amadores Beach">
+          <g class="bob" style="animation-delay:.2s"><circle cx="175" cy="430" r="18" fill="#0fb5d6" stroke="#fff" stroke-width="4"/><text x="175" y="437" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">2</text></g></g>
+        <g class="pin" data-target="rockpools" tabindex="0" role="link" aria-label="3 Rock Pools">
+          <g class="bob" style="animation-delay:.4s"><circle cx="125" cy="215" r="18" fill="#2a9d8f" stroke="#fff" stroke-width="4"/><text x="125" y="222" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">3</text></g></g>
+        <g class="pin" data-target="aqualand" tabindex="0" role="link" aria-label="4 Aqualand">
+          <g class="bob" style="animation-delay:.6s"><circle cx="300" cy="455" r="18" fill="#3a86ff" stroke="#fff" stroke-width="4"/><text x="300" y="462" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">4</text></g></g>
+        <g class="pin" data-target="planeta" tabindex="0" role="link" aria-label="5 Planeta Gran Canaria">
+          <g class="bob" style="animation-delay:.8s"><circle cx="455" cy="200" r="18" fill="#d62828" stroke="#fff" stroke-width="4"/><text x="455" y="207" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">5</text></g></g>
+        <g class="pin" data-target="canteras" tabindex="0" role="link" aria-label="6 Las Canteras">
+          <g class="bob" style="animation-delay:1s"><circle cx="435" cy="118" r="18" fill="#f4a261" stroke="#fff" stroke-width="4"/><text x="435" y="125" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">6</text></g></g>
+        <g class="pin" data-target="sand" tabindex="0" role="link" aria-label="7 Sand Sculptures">
+          <g class="bob" style="animation-delay:1.2s"><circle cx="475" cy="95" r="18" fill="#c1121f" stroke="#fff" stroke-width="4"/><text x="475" y="102" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">7</text></g></g>
+        <g class="pin" data-target="poema" tabindex="0" role="link" aria-label="8 Poema del Mar">
+          <g class="bob" style="animation-delay:1.4s"><circle cx="490" cy="150" r="18" fill="#9b5de5" stroke="#fff" stroke-width="4"/><text x="490" y="157" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">8</text></g></g>
+        <g class="pin" data-target="holiday" tabindex="0" role="link" aria-label="9 Holiday World">
+          <g class="bob" style="animation-delay:1.6s"><circle cx="340" cy="480" r="18" fill="#f15bb5" stroke="#fff" stroke-width="4"/><text x="340" y="487" text-anchor="middle" font-size="18" font-family="Fredoka" font-weight="700" fill="#fff">9</text></g></g>
+        <g class="pin" data-target="arenas" tabindex="0" role="link" aria-label="10 Las Arenas bowling and arcade">
+          <g class="bob" style="animation-delay:1.8s"><circle cx="400" cy="100" r="18" fill="#ff9f1c" stroke="#fff" stroke-width="4"/><text x="400" y="106" text-anchor="middle" font-size="15" font-family="Fredoka" font-weight="700" fill="#fff">10</text></g></g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ================= ADVENTURES ================= -->
+  <section id="adventures">
+    <h2 class="section-title">🌟 Our Adventure List</h2>
+    <p class="section-sub">Tick the star box when you've done one — can you collect all 10 stars?</p>
+
+    <div class="score" aria-live="polite">
+      <div class="stars" id="stars"></div>
+      <div id="scoreText">0 of 10 adventures done</div>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filter adventures">
+      <button class="chip on" data-filter="all">🌈 All</button>
+      <button class="chip" data-filter="beach">🏖️ Beach & sea</button>
+      <button class="chip" data-filter="thrills">🎢 Thrills & games</button>
+      <button class="chip" data-filter="xmas">🎄 Christmas only</button>
+    </div>
+
+    <div class="random-box">
+      <button class="btn sea" id="randomBtn"><span class="dice">🎲</span> Pick an adventure for me!</button>
+    </div>
+
+    <div class="cards" id="cards">
+
+      <!-- 1 Go karting -->
+      <article class="card" id="karting" data-tags="thrills" style="--accent:#ff6b6b">
+        <div class="number">1</div>
+        <figure class="photo">
+          <img src="images/karting.jpg" alt="A driver in a helmet racing a go-kart around a track lined with tyres" loading="lazy">
+          <figcaption class="credit">Photo: Vsatinet, CC BY-SA 4.0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🏎️</span> Go Karting</h3>
+          <p class="where">📍 Gran Karting Club, Bahía Feliz (south of the island)</p>
+          <p>Helmet on, foot down — vroom! Race around real twisty tracks and see who can do the fastest lap. There are smaller, slower karts for younger drivers and double karts so a grown-up can ride along with little ones.</p>
+          <ul class="facts">
+            <li>🏁 Racing has been happening here since 1983!</li>
+            <li>👟 Wear closed shoes and tie long hair back.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://grankartingclub.com/en/" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="karting"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2 Amadores -->
+      <article class="card" id="amadores" data-tags="beach" style="--accent:#0fb5d6">
+        <div class="number">2</div>
+        <figure class="photo">
+          <img src="images/amadores.jpg" alt="Amadores beach with white sand, sunshades and calm turquoise water" loading="lazy">
+          <figcaption class="credit">Photo: Felix König, CC BY-SA 3.0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🏖️</span> Amadores Beach</h3>
+          <p class="where">📍 Between Puerto Rico and Tauro, Mogán (south-west)</p>
+          <p>A beach that looks like the Caribbean! Soft white-golden sand and calm, turquoise water that is sheltered from big waves by two rocky arms — perfect for paddling, splashing and building sandcastles.</p>
+          <ul class="facts">
+            <li>🌊 The water is usually calm, great for little swimmers.</li>
+            <li>🧴 It's very sunny here — bring a hat and suncream!</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://www.grancanaria.com/turismo/en/beaches/amadores/" target="_blank" rel="noopener">🔗 Find out more</a>
+            <label class="done"><input type="checkbox" data-id="amadores"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3 Rock pools -->
+      <article class="card" id="rockpools" data-tags="beach" style="--accent:#2a9d8f">
+        <div class="number">3</div>
+        <figure class="photo">
+          <img src="images/rockpools.jpg" alt="Natural rock pools of volcanic rock filled with clear seawater at Agaete" loading="lazy">
+          <figcaption class="credit">Photo: Grgor12, CC0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🦀</span> Rock Pools</h3>
+          <p class="where">📍 All around the coast — try Agaete, Bañaderos or La Laja</p>
+          <p>Become a sea explorer! Gran Canaria's black volcanic rocks make amazing natural pools that fill up with seawater. Peek in to spot crabs scuttling, tiny fish darting about and sea anemones waving.</p>
+          <ul class="facts">
+            <li>🔍 Take a bucket and look — but put creatures back gently.</li>
+            <li>⚠️ Rocks can be slippery, and always check the waves with a grown-up.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://www.grancanaria.com/turismo/en/beaches/piscinas-naturales/" target="_blank" rel="noopener">🔗 Natural pools guide</a>
+            <label class="done"><input type="checkbox" data-id="rockpools"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4 Aqualand -->
+      <article class="card" id="aqualand" data-tags="thrills" style="--accent:#3a86ff">
+        <div class="number">4</div>
+        <figure class="photo">
+          <img src="images/aqualand.jpg" alt="Colourful water slides at Aqualand Maspalomas" loading="lazy">
+          <figcaption class="credit">Photo: Xengi, public domain</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">💦</span> Aqualand</h3>
+          <p class="where">📍 Maspalomas (south)</p>
+          <p>The biggest splash on the island! Whizz down twisty water slides, float along the lazy river and play in the special kids' areas with little slides and water cannons. Warning: you WILL get wet! 😄</p>
+          <ul class="facts">
+            <li>📏 Some big slides have a height rule — measure yourself at the entrance!</li>
+            <li>🩴 Bring flip-flops: the ground gets hot in the sun.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://www.aqualand.es/en/grancanaria/" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="aqualand"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5 Planeta Gran Canaria -->
+      <article class="card xmas" id="planeta" data-tags="xmas thrills" style="--accent:#d62828">
+        <div class="number">5</div>
+        <div class="xmas-badge">🎄 Christmas only</div>
+        <figure class="photo">
+          <img src="images/planeta.jpg" alt="Children jumping on a big yellow bouncy castle" loading="lazy">
+          <figcaption class="credit">Photo: David E. Lucas, public domain</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🪐</span> Planeta Gran Canaria</h3>
+          <p class="where">📍 Infecar fairground, Las Palmas · late December to early January</p>
+          <p>A giant Christmas holiday festival just for kids and families! It's packed with bouncy castles, games, sports, workshops, shows and things to make and discover — a whole planet of fun under one roof.</p>
+          <ul class="facts">
+            <li>🗓️ It only opens during the Christmas holidays — check the dates each year.</li>
+            <li>🎁 Around 35,000 visitors came last time!</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://planetagrancanaria.es/" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="planeta"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6 Las Canteras -->
+      <article class="card" id="canteras" data-tags="beach" style="--accent:#f4a261">
+        <div class="number">6</div>
+        <figure class="photo">
+          <img src="images/canteras.jpg" alt="Las Canteras beach with golden sand and the city of Las Palmas behind" loading="lazy">
+          <figcaption class="credit">Photo: Nicolas Vigier, CC0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🤿</span> Las Canteras</h3>
+          <p class="where">📍 Las Palmas de Gran Canaria (north)</p>
+          <p>A super long golden beach right in the city! A natural rock reef called <strong>"La Barra"</strong> stops the big waves, so the water is calm — brilliant for snorkelling and spotting colourful fish. At low tide you can almost walk out to the reef!</p>
+          <ul class="facts">
+            <li>🐠 Hundreds of kinds of sea creatures live around La Barra.</li>
+            <li>🍦 Walk along the promenade for an ice cream afterwards.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://www.grancanaria.com/turismo/en/beaches/las-canteras/" target="_blank" rel="noopener">🔗 Find out more</a>
+            <label class="done"><input type="checkbox" data-id="canteras"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 7 Sand sculptures -->
+      <article class="card xmas" id="sand" data-tags="xmas beach" style="--accent:#c1121f">
+        <div class="number">7</div>
+        <div class="xmas-badge">🎄 Christmas only</div>
+        <figure class="photo">
+          <img src="images/sand.jpg" alt="A giant, detailed sculpture of a person made entirely of sand" loading="lazy">
+          <figcaption class="credit">Photo: El Coleccionista de Instantes, CC BY-SA 2.0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🏰</span> Sand Sculptures on Las Canteras</h3>
+          <p class="where">📍 La Puntilla end of Las Canteras beach · mid-December to early January</p>
+          <p>The biggest sandcastle you've ever seen! Every Christmas, sand artists from around the world carve a giant nativity scene out of the beach — with people, animals and buildings up to <strong>5 metres tall</strong>. It's all made from sand and water!</p>
+          <ul class="facts">
+            <li>🏗️ Around 2,000 tonnes of sand are used — that's heavier than 300 elephants!</li>
+            <li>💝 Money raised goes to help charities.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://belendearena.es/en" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="sand"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 8 Poema del Mar -->
+      <article class="card" id="poema" data-tags="beach" style="--accent:#9b5de5">
+        <div class="number">8</div>
+        <figure class="photo">
+          <img src="images/poema.jpg" alt="Glowing pink jellyfish floating in a dark blue tank at Poema del Mar" loading="lazy">
+          <figcaption class="credit">Photo: SDKmac, CC BY-SA 4.0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🦈</span> Poema del Mar</h3>
+          <p class="where">📍 By the port in Las Palmas (north)</p>
+          <p>Dive into an underwater world without getting wet! This amazing aquarium has glowing jellyfish, sharks, rays, funny-looking fish and a giant curved window into the deep blue ocean that feels like standing on the sea floor.</p>
+          <ul class="facts">
+            <li>🪼 Watch the jellyfish — they glow and drift like space aliens.</li>
+            <li>🌧️ A great idea for a cloudy or rainy day.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://www.poemadelmar.com/" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="poema"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 9 Holiday World -->
+      <article class="card" id="holiday" data-tags="thrills" style="--accent:#f15bb5">
+        <div class="number">9</div>
+        <figure class="photo">
+          <img src="images/holiday.jpg" alt="A funfair at night with a glowing ferris wheel and colourful rides" loading="lazy">
+          <figcaption class="credit">Photo (a funfair like it!): Basile Morin, CC BY-SA 4.0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🎡</span> Holiday World</h3>
+          <p class="where">📍 Maspalomas (south)</p>
+          <p>A funfair full of flashing lights! Ride the big ferris wheel, spin on the rides, try the bumper cars and play in the arcade. It's extra magical in the evening when everything lights up.</p>
+          <ul class="facts">
+            <li>🎢 Over 30 rides for all ages.</li>
+            <li>🌙 Check the opening hours — it's open into the evening.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://www.holidayworldmaspalomas.com/en/" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="holiday"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10 Las Arenas -->
+      <article class="card" id="arenas" data-tags="thrills" style="--accent:#ff9f1c">
+        <div class="number">10</div>
+        <figure class="photo">
+          <img src="images/bowling.jpg" alt="Bowling lanes with colourful lights at the end" loading="lazy">
+          <figcaption class="credit">Photo (a bowling alley like it!): RegionVisitor90, CC0</figcaption>
+        </figure>
+        <div class="info">
+          <h3><span class="emoji">🎳</span> Las Arenas Arcade &amp; Bowling</h3>
+          <p class="where">📍 Las Arenas shopping centre, Las Palmas (north)</p>
+          <p>Strike! Knock down all ten pins at the bowling lanes (there are bumpers to help beginners), then win tickets on the arcade games and swap them for prizes. Great fun for the whole family on any day.</p>
+          <ul class="facts">
+            <li>🎟️ Collect tickets from the games to trade for prizes.</li>
+            <li>🧦 Bowling shoes are needed — bring socks!</li>
+          </ul>
+          <div class="actions">
+            <a class="btn" href="https://ilusiona.com/lasarenas/" target="_blank" rel="noopener">🔗 Visit website</a>
+            <label class="done"><input type="checkbox" data-id="arenas"><span class="box"></span> We did it!</label>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <h2>Have an amazing time! 🌴☀️🌊</h2>
+  <p>Always check opening times and dates on the websites before you go.</p>
+  <details>
+    <summary>📸 Photo credits (from Wikimedia Commons)</summary>
+    <ul>
+      <li>Hero: <a href="https://commons.wikimedia.org/wiki/File:Playa_de_las_Canteras_2016_84.jpg">Playa de las Canteras</a> — Bengt Nyman, CC BY-SA 4.0</li>
+      <li>Go karting: <a href="https://commons.wikimedia.org/wiki/File:Young_go-kart_driver.jpg">Young go-kart driver</a> — Vsatinet, CC BY-SA 4.0</li>
+      <li>Amadores: <a href="https://commons.wikimedia.org/wiki/File:Playa_de_los_Amadores_2010.JPG">Playa de los Amadores</a> — Felix König, CC BY-SA 3.0</li>
+      <li>Rock pools: <a href="https://commons.wikimedia.org/wiki/File:Piscinas_naturales_de_Agaete.jpg">Piscinas naturales de Agaete</a> — Grgor12, CC0</li>
+      <li>Aqualand: <a href="https://commons.wikimedia.org/wiki/File:Aqualand_Gran_Canaria.JPG">Aqualand Gran Canaria</a> — Xengi, public domain</li>
+      <li>Planeta Gran Canaria: <a href="https://commons.wikimedia.org/wiki/File:Bouncy_castle_at_the_Ohio_State_Fair_-_DPLA_-_2bd852552a76f2330cb0addb8e7d0dd8.jpg">Bouncy castle</a> — David E. Lucas, public domain</li>
+      <li>Las Canteras: <a href="https://commons.wikimedia.org/wiki/File:Playa_de_las_Canteras,_Las_Palmas_de_Gran_Canaria_-_51605256627.jpg">Playa de las Canteras</a> — Nicolas Vigier, CC0</li>
+      <li>Sand sculptures: <a href="https://commons.wikimedia.org/wiki/File:X_Bel%C3%A9n_de_Arena_Playa_Las_Canteras_Las_Palmas_de_Gran_Canaria._(22895307464).jpg">Belén de Arena</a> — El Coleccionista de Instantes, CC BY-SA 2.0</li>
+      <li>Poema del Mar: <a href="https://commons.wikimedia.org/wiki/File:Jellyfish_at_Poema_del_Mar_Las_Palmas_Gran_Canaria.jpg">Jellyfish at Poema del Mar</a> — SDKmac, CC BY-SA 4.0</li>
+      <li>Holiday World: <a href="https://commons.wikimedia.org/wiki/File:Illuminated_Ferris_wheel,_bouncing_castle_and_carousel_at_night_in_a_funfair_in_Vientiane,_Laos.jpg">Illuminated funfair</a> — Basile Morin, CC BY-SA 4.0</li>
+      <li>Bowling: <a href="https://commons.wikimedia.org/wiki/File:Bowland_Elizabeth,_Edinburgh_North_20251209-093756.jpg">Bowling lanes</a> — RegionVisitor90, CC0</li>
+    </ul>
+  </details>
+</footer>
+
+<a class="btn back-top" id="backTop" href="#top" aria-label="Back to top">🚀</a>
+
+<script>
+(() => {
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cards = [...document.querySelectorAll(".card")];
+
+  /* ---------- Scroll progress + back-to-top ---------- */
+  const progress = document.getElementById("progress");
+  const backTop = document.getElementById("backTop");
+  const onScroll = () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    progress.style.width = (pct * 100) + "%";
+    backTop.classList.toggle("show", h.scrollTop > 600);
+  };
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Reveal cards as they scroll into view ---------- */
+  const revealer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("seen");
+        revealer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(c => revealer.observe(c));
+
+  /* ---------- Highlight current card in the nav ---------- */
+  const navLinks = [...document.querySelectorAll("#nav a")];
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      navLinks.forEach(a => a.classList.toggle("active", a.dataset.for === e.target.id));
+      if (e.target.classList.contains("xmas")) letItSnow();
+    });
+  }, { rootMargin: "-45% 0px -45% 0px" });
+  cards.forEach(c => spy.observe(c));
+
+  /* ---------- Snow for Christmas cards ---------- */
+  let snowing = false;
+  function letItSnow() {
+    if (snowing || reduceMotion) return;
+    snowing = true;
+    const flakes = ["❄️", "❅", "❆", "✻"];
+    for (let i = 0; i < 40; i++) {
+      setTimeout(() => {
+        const s = document.createElement("div");
+        s.className = "snowflake";
+        s.textContent = flakes[i % flakes.length];
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.fontSize = (14 + Math.random() * 22) + "px";
+        s.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(s);
+        s.addEventListener("animationend", () => s.remove());
+      }, i * 120);
+    }
+    setTimeout(() => { snowing = false; }, 9000);
+  }
+
+  /* ---------- Confetti ---------- */
+  function confetti(x, y, count = 40) {
+    if (reduceMotion) return;
+    const colours = ["#ff6b6b", "#ffc93c", "#7ed957", "#0fb5d6", "#9b5de5", "#f15bb5"];
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      c.style.left = x + "px";
+      c.style.top = y + "px";
+      c.style.background = colours[i % colours.length];
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 80 + Math.random() * 180;
+      c.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+      c.style.setProperty("--dy", Math.sin(angle) * dist + 120 + "px");
+      c.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg");
+      document.body.appendChild(c);
+      c.addEventListener("animationend", () => c.remove());
+    }
+  }
+
+  /* ---------- "We did it!" checklist (saved in this browser) ---------- */
+  const KEY = "gc-kids-done";
+  const done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
+  const starsEl = document.getElementById("stars");
+  const scoreText = document.getElementById("scoreText");
+  starsEl.innerHTML = cards.map(() => "<span>⭐</span>").join("");
+
+  function renderScore() {
+    const n = done.size;
+    [...starsEl.children].forEach((s, i) => s.classList.toggle("lit", i < n));
+    scoreText.textContent = n === cards.length
+      ? "🏆 WOW! You did ALL 10 adventures! You're a Gran Canaria champion!"
+      : `${n} of ${cards.length} adventures done`;
+  }
+
+  document.querySelectorAll(".done input").forEach(box => {
+    const card = box.closest(".card");
+    box.checked = done.has(box.dataset.id);
+    card.classList.toggle("is-done", box.checked);
+    box.addEventListener("change", () => {
+      box.checked ? done.add(box.dataset.id) : done.delete(box.dataset.id);
+      localStorage.setItem(KEY, JSON.stringify([...done]));
+      card.classList.toggle("is-done", box.checked);
+      renderScore();
+      if (box.checked) {
+        const r = box.nextElementSibling.getBoundingClientRect();
+        confetti(r.left + r.width / 2, r.top + r.height / 2);
+        if (done.size === cards.length) confetti(innerWidth / 2, innerHeight / 3, 120);
+      }
+    });
+  });
+  renderScore();
+
+  /* ---------- Filters ---------- */
+  const chips = [...document.querySelectorAll(".chip")];
+  chips.forEach(chip => chip.addEventListener("click", () => {
+    chips.forEach(c => c.classList.toggle("on", c === chip));
+    const f = chip.dataset.filter;
+    cards.forEach(card => {
+      const show = f === "all" || card.dataset.tags.split(" ").includes(f);
+      card.classList.toggle("hidden", !show);
+      if (show) {
+        // replay the pop-in so the change feels bouncy
+        card.classList.remove("seen");
+        void card.offsetWidth;
+        requestAnimationFrame(() => card.classList.add("seen"));
+      }
+    });
+  }));
+
+  /* ---------- Jump helpers (map pins + random picker) ---------- */
+  function goTo(id) {
+    const card = document.getElementById(id);
+    if (card.classList.contains("hidden")) chips[0].click();
+    card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+    setTimeout(() => {
+      card.classList.add("seen");
+      card.classList.remove("celebrate");
+      void card.offsetWidth;
+      card.classList.add("celebrate");
+    }, 700);
+  }
+
+  document.querySelectorAll(".pin").forEach(pin => {
+    pin.addEventListener("click", () => goTo(pin.dataset.target));
+    pin.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(pin.dataset.target); }
+    });
+  });
+
+  const randomBtn = document.getElementById("randomBtn");
+  randomBtn.addEventListener("click", () => {
+    randomBtn.classList.add("rolling");
+    randomBtn.disabled = true;
+    setTimeout(() => {
+      randomBtn.classList.remove("rolling");
+      randomBtn.disabled = false;
+      const notDone = cards.filter(c => !done.has(c.id));
+      const pool = notDone.length ? notDone : cards;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      goTo(pick.id);
+      const r = randomBtn.getBoundingClientRect();
+      confetti(r.left + r.width / 2, r.top, 25);
+    }, reduceMotion ? 0 : 900);
+  });
+})();
+</script>
+</body>
+</html>
