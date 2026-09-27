@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stephen &amp; Silvia's Gran Canaria</title>
+<meta name="description" content="Stephen and Silvia's favourite things to do, see and eat in Gran Canaria.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f7efe3;
+    --sand-deep: #efe0c8;
+    --ink: #1f2a33;
+    --muted: #5d6b75;
+    --ocean: #0e6e8c;
+    --ocean-deep: #0a4f66;
+    --sunset: #e0703a;
+    --card: #ffffff;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; line-height: 1.15; margin: 0; }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: #fff;
+    background: url("images/dunes.jpg") center / cover no-repeat;
+    padding: 4rem 1.5rem 6rem;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,40,55,.55) 0%, rgba(10,40,55,.4) 50%, rgba(10,40,55,.2) 78%, rgba(247,239,227,1) 100%);
+  }
+  .hero-inner { position: relative; max-width: 780px; }
+  .hero .eyebrow {
+    display: inline-block;
+    font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    background: rgba(255,255,255,.18); backdrop-filter: blur(6px);
+    padding: .45rem 1rem; border-radius: 999px; margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem); font-weight: 800;
+    text-shadow: 0 2px 24px rgba(0,0,0,.35);
+  }
+  .hero p {
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem); margin: 1.1rem auto 2rem; max-width: 560px;
+    text-shadow: 0 1px 12px rgba(0,0,0,.45);
+  }
+  .jump { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  .jump a {
+    color: var(--ink); background: #fff; text-decoration: none; font-weight: 600;
+    padding: .75rem 1.4rem; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.15);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .jump a:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.2); }
+
+  /* Sections */
+  main { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  section { padding-top: 3.5rem; }
+  .section-head { text-align: center; margin-bottom: 2.25rem; }
+  .section-head h2 { font-size: clamp(2rem, 4vw, 2.8rem); }
+  .section-head p { color: var(--muted); margin: .5rem 0 0; }
+  .section-head .wave { color: var(--sunset); font-size: 1.4rem; letter-spacing: .3em; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(31,42,51,.06), 0 10px 30px rgba(31,42,51,.08);
+    display: flex; flex-direction: column;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 2px 4px rgba(31,42,51,.06), 0 18px 40px rgba(31,42,51,.14); }
+  .card-img { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--sand-deep); }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s; }
+  .card:hover .card-img img { transform: scale(1.05); }
+  .tag {
+    position: absolute; top: .9rem; left: .9rem;
+    background: rgba(255,255,255,.92); color: var(--ocean-deep);
+    font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    padding: .35rem .7rem; border-radius: 999px;
+  }
+  .card-body { padding: 1.35rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+  .card h3 { font-size: 1.45rem; font-weight: 600; }
+  .where { color: var(--sunset); font-size: .85rem; font-weight: 600; margin-top: .2rem; }
+  .card p { color: var(--muted); margin: .75rem 0 0; }
+  .tip {
+    margin-top: .9rem; padding: .7rem .9rem; border-radius: 12px;
+    background: #fdf3ea; color: #8a4a22; font-size: .92rem;
+    border-left: 3px solid var(--sunset);
+  }
+  .card .link {
+    margin-top: auto; padding-top: 1.1rem;
+    display: inline-flex; align-items: center; gap: .4rem;
+    color: var(--ocean); font-weight: 600; text-decoration: none;
+  }
+  .card .link span { transition: transform .2s; }
+  .card .link:hover span { transform: translateX(4px); }
+
+  /* Area sub-headings within a section */
+  .area { display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap; margin: 2.75rem 0 1.25rem; padding-bottom: .6rem; border-bottom: 2px solid var(--sand-deep); scroll-margin-top: 1rem; }
+  .section-head + .area { margin-top: 0; }
+  .area-title { font-size: 1.6rem; font-weight: 600; }
+  .area-sub { margin: 0; color: var(--muted); }
+  .area-links { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+  .area-links a { color: var(--ocean-deep); background: #fff; text-decoration: none; font-weight: 600; font-size: .9rem; padding: .4rem 1rem; border-radius: 999px; box-shadow: 0 1px 2px rgba(31,42,51,.08); }
+  .area-links a:hover { background: var(--ocean); color: #fff; }
+
+  /* Cards offering several places to book */
+  .options { margin: auto 0 0; padding: 1.1rem 0 0; list-style: none; }
+  .options-label { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+  .options li + li { margin-top: .45rem; }
+  .options a { color: var(--ocean); font-weight: 600; text-decoration: none; }
+  .options a:hover { text-decoration: underline; }
+  .options small { display: block; color: var(--muted); font-size: .85rem; }
+
+  /* Cards showing a venue's artwork rather than a photo */
+  .card-img.art { background: linear-gradient(135deg, #f3e3cf, #e9cfb4); }
+  .card-img.art img { object-fit: contain; padding: .75rem 0; }
+  .card:hover .card-img.art img { transform: scale(1.03); }
+
+  /* Illustrated card for places without a photo */
+  .illustration {
+    width: 100%; height: 100%;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(circle at 70% 30%, #ffd08a 0 14%, transparent 15%),
+      linear-gradient(180deg, #f6a96b 0%, #e0703a 55%, #0e6e8c 56%, #0a4f66 100%);
+    color: #fff; font-family: "Fraunces", Georgia, serif; font-size: 3rem; font-weight: 800;
+    text-shadow: 0 3px 18px rgba(0,0,0,.25);
+  }
+
+  footer {
+    text-align: center; color: var(--muted); font-size: .85rem;
+    padding: 2.5rem 1.5rem 3rem; border-top: 1px solid var(--sand-deep);
+    max-width: 1180px; margin: 0 auto;
+  }
+  footer .sign { font-family: "Fraunces", Georgia, serif; font-size: 1.4rem; color: var(--ink); margin-bottom: .5rem; }
+
+  @media (max-width: 420px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Welcome to the island</span>
+    <h1>Stephen &amp; Silvia's Gran&nbsp;Canaria</h1>
+    <p>Our favourite places to explore, swim, eat and drink &mdash; the things we'd take you to ourselves.</p>
+    <nav class="jump">
+      <a href="#explore">Things to do</a>
+      <a href="#eat">Where to eat &amp; drink</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="explore">
+    <div class="section-head">
+      <div class="wave">~ ~ ~</div>
+      <h2>Things to do</h2>
+      <p>Mountains, beaches, dolphins, an old town, a spa and a racetrack.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="card-img">
+          <img src="images/roque-nublo.jpg" alt="Panoramic view of Roque Nublo and the mountains of central Gran Canaria" style="object-position: 20% center;" loading="lazy">
+          <span class="tag">Mountains</span>
+        </div>
+        <div class="card-body">
+          <h3>Roque Nublo</h3>
+          <div class="where">Tejeda, the island's centre</div>
+          <p>The iconic volcanic rock towering over the island, with incredible views across the mountains. Be sure to book.</p>
+          <a class="link" href="https://www.grancanaria.com/turismo/en/nature/mirador-lookout-network/mirador-roquenublo/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/rock-pools.jpg" alt="Natural rock pools at Las Salinas, Agaete, with mountains behind" loading="lazy">
+          <span class="tag">Swimming</span>
+        </div>
+        <div class="card-body">
+          <h3>Rock pools</h3>
+          <div class="where">The north coast</div>
+          <p>Dive into the magical natural sea-water pools along the northern coastline.</p>
+          <a class="link" href="https://www.grancanaria.com/blog/en/article/dive-into-the-magical-rock-pools-of-northern-gran-canaria/" target="_blank" rel="noopener">See the best pools <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/dunes.jpg" alt="The golden sand dunes of Maspalomas" loading="lazy">
+          <span class="tag">Nature</span>
+        </div>
+        <div class="card-body">
+          <h3>The Dunes</h3>
+          <div class="where">Maspalomas</div>
+          <p>A little piece of the Sahara by the sea &mdash; a protected nature reserve of rolling golden dunes.</p>
+          <a class="link" href="https://www.hellocanaryislands.com/nature-spaces/gran-canaria/maspalomas-dunes-nature-reserve/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/confital.jpg" alt="El Confital beach with volcanic rocks and the ocean" loading="lazy">
+          <span class="tag">Beach</span>
+        </div>
+        <div class="card-body">
+          <h3>Playa del Confital</h3>
+          <div class="where">Las Palmas</div>
+          <p>A wild, beautiful beach on the edge of the city.</p>
+          <div class="tip">But don't cut yourself on the rocks!</div>
+          <a class="link" href="https://villagrancanaria.com/experiences/el-confital-beach-gran-canaria/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/las-canteras.jpg" alt="Golden sand and clear turquoise water at Las Canteras beach" loading="lazy">
+          <span class="tag">Beach</span>
+        </div>
+        <div class="card-body">
+          <h3>Las Canteras</h3>
+          <div class="where">Las Palmas</div>
+          <p>The city's famous golden beach, with calm clear water and a long promenade lined with cafés and restaurants.</p>
+          <a class="link" href="https://www.grancanaria.com/turismo/es/playas/las-canteras/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/amadores.jpg" alt="The turquoise crescent bay of Amadores beach" loading="lazy">
+          <span class="tag">Beach</span>
+        </div>
+        <div class="card-body">
+          <h3>Amadores</h3>
+          <div class="where">Near Puerto Rico, the south-west</div>
+          <p>A fun beach with activities for kids.</p>
+          <a class="link" href="https://www.grancanaria.com/turismo/en/beaches/amadores/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/common-dolphin-jumping.jpg" alt="Two common dolphins leaping out of the sea" loading="lazy">
+          <span class="tag">Boat trip</span>
+        </div>
+        <div class="card-body">
+          <h3>Dolphin watching</h3>
+          <div class="where">From the south coast harbours</div>
+          <p>The boat trips are quite nice, and you'll almost certainly see dolphins.</p>
+          <ul class="options">
+            <li class="options-label">Some options</li>
+            <li>
+              <a href="https://www.cancograncanaria.com/en/product/whale-dolphin-watching-puerto-de-mogan/" target="_blank" rel="noopener">Canco &rarr;</a>
+              <small>Whale &amp; dolphin watching from Puerto de Mogán</small>
+            </li>
+            <li>
+              <a href="https://www.glassbottomboatgrancanaria.com/2-dolphin-search-boat-trip-with-market-puerto-de-mogan" target="_blank" rel="noopener">Glass Bottom Boat &rarr;</a>
+              <small>Dolphin search, plus a visit to Mogán market</small>
+            </li>
+            <li>
+              <a href="https://www.coconuttrips.com/tours/multiacuatic-dolphin-and-whale-safari/" target="_blank" rel="noopener">Multiacuatic &rarr;</a>
+              <small>Dolphin &amp; whale safari from Puerto Rico</small>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/agaete.jpg" alt="Dramatic cliffs dropping into the sea at Agaete" loading="lazy">
+          <span class="tag">Day trip</span>
+        </div>
+        <div class="card-body">
+          <h3>Visit Agaete</h3>
+          <div class="where">The north-west coast</div>
+          <p>A pretty little town with nice restaurants on the sea front. You can swim there too.</p>
+          <a class="link" href="https://www.grancanaria.com/turismo/en/tours-around-the-island/the-northern-route/agaete/" target="_blank" rel="noopener">Find out more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/vegueta.jpg" alt="The ornate balconies and doorway of the Casa de Colón in Vegueta" loading="lazy">
+          <span class="tag">Old town</span>
+        </div>
+        <div class="card-body">
+          <h3>Vegueta</h3>
+          <div class="where">Las Palmas</div>
+          <p>The historic old town &mdash; cobbled streets, colonial houses, the cathedral and the Casa de Colón. Lovely for a stroll.</p>
+          <a class="link" href="https://www.grancanaria.com/blog/en/article/vegueta-a-stroll-around-the-new-world/" target="_blank" rel="noopener">Take the stroll <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/elder.jpg" alt="A replica of the Wright brothers' plane at the Elder Museum" loading="lazy">
+          <span class="tag">Museum</span>
+        </div>
+        <div class="card-body">
+          <h3>The Elder Museum</h3>
+          <div class="where">Parque Santa Catalina, Las Palmas</div>
+          <p>A fun science and technology museum &mdash; and almost everything is in English as well as Spanish.</p>
+          <a class="link" href="https://www.museoelder.es/" target="_blank" rel="noopener">Visit the museum site <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/go-karting.jpg" alt="Aerial view of the Gran Karting Club circuit next to the sea" loading="lazy">
+          <span class="tag">Adrenaline</span>
+        </div>
+        <div class="card-body">
+          <h3>Go Karting</h3>
+          <div class="where">Gran Karting Club, Bahía Feliz</div>
+          <p>Race each other round a big circuit overlooking the sea, with tracks for grown-ups and kids.</p>
+          <a class="link" href="https://grankartingclub.com/" target="_blank" rel="noopener">See the tracks <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/spa-santa-catalina.jpg" alt="The softly lit spa pool at Santa Catalina hotel in the evening" loading="lazy">
+          <span class="tag">Spa</span>
+        </div>
+        <div class="card-body">
+          <h3>Santa Catalina Spa</h3>
+          <div class="where">Santa Catalina, a Royal Hideaway Hotel, Las Palmas</div>
+          <p>Have a super relaxing spa experience &mdash; highly recommended.</p>
+          <a class="link" href="https://www.barcelo.com/en-es/santa-catalina-a-royal-hideaway-hotel/wellness/" target="_blank" rel="noopener">See the spa <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/club-nautico.jpg" alt="The pool at the Real Club Náutico de Gran Canaria" loading="lazy">
+          <span class="tag">Our club</span>
+        </div>
+        <div class="card-body">
+          <h3>Club Náutico</h3>
+          <div class="where">Real Club Náutico de Gran Canaria, Las Palmas</div>
+          <p>Join us at the pool or the restaurant.</p>
+          <a class="link" href="https://www.rcngc.com/sobre-el-club" target="_blank" rel="noopener">About the club <span>&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="eat">
+    <div class="section-head">
+      <div class="wave">~ ~ ~</div>
+      <h2>Where to eat &amp; drink</h2>
+      <p>The places we keep going back to.</p>
+      <nav class="area-links">
+        <a href="#eat-las-palmas">Las Palmas</a>
+        <a href="#eat-the-south">The south</a>
+        <a href="#eat-the-north">The north</a>
+      </nav>
+    </div>
+
+    <div class="area" id="eat-las-palmas">
+      <h3 class="area-title">Las Palmas</h3>
+      <p class="area-sub">Mostly in and around Triana, the old town, plus a few along Las Canteras beach.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="card-img">
+          <img src="images/vinofilos.jpg" alt="The tiled shopfront of Vinófilos in Triana" loading="lazy">
+          <span class="tag">Wine &amp; tapas</span>
+        </div>
+        <div class="card-body">
+          <h3>Vinófilos</h3>
+          <div class="where">Triana, Las Palmas</div>
+          <p>Delicious artichokes, the sardines are great too, and excellent wine. They sometimes have wine tastings too.</p>
+          <a class="link" href="https://vinofilos.es/restaurantes/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img art">
+          <img src="images/manuela-jimena.png" alt="Manuela Jimena's illustration of a woman in a black dress holding a blackbird" loading="lazy">
+          <span class="tag">Restaurant</span>
+        </div>
+        <div class="card-body">
+          <h3>Manuela Jimena</h3>
+          <div class="where">Calle de la Pelota, Vegueta &mdash; next to Triana</div>
+          <p>A good place to go eat if you're in Triana/Vegueta.</p>
+          <a class="link" href="https://manuelajimenabar.com/" target="_blank" rel="noopener">See the bar <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/midway.jpg" alt="The owners of Midway behind the bar" style="object-position: center 40%;" loading="lazy">
+          <span class="tag">Tortilla</span>
+        </div>
+        <div class="card-body">
+          <h3>Midway</h3>
+          <div class="where">Calle Domingo J. Navarro, Triana</div>
+          <p>If you like tortilla, go to Midway &mdash; &ldquo;el sitio de la tortilla&rdquo; since 1985.</p>
+          <a class="link" href="https://www.facebook.com/profile.php?id=100057524587023" target="_blank" rel="noopener">See them on Facebook <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/que-leche.jpg" alt="The dining room at Qué Leche, with a stone archway and wine shelves" loading="lazy">
+          <span class="tag">Restaurant</span>
+        </div>
+        <div class="card-body">
+          <h3>Qué Leche</h3>
+          <div class="where">Calle Torres, Triana</div>
+          <p>A really good option. Sharing plates from chef Jennise Ferrari, mixing Venezuelan flavours with local produce &mdash; it's in the Michelin Guide.</p>
+          <a class="link" href="https://restauranteql.es/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/deliciosa-marta.jpg" alt="The elegant stone-walled dining room at Deliciosa Marta" loading="lazy">
+          <span class="tag">Fine dining</span>
+        </div>
+        <div class="card-body">
+          <h3>Deliciosa Marta</h3>
+          <div class="where">Calle Pérez Galdós, Triana</div>
+          <p>Recommended if you'd like a very fancy meal.</p>
+          <a class="link" href="https://localguidegrancanaria.com/en/deliciosa-marta/" target="_blank" rel="noopener">Read more <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/indio-comido.jpg" alt="A red cocktail with mint and orange held up at Indio Comido" style="object-position: center 60%;" loading="lazy">
+          <span class="tag">Cocktails</span>
+        </div>
+        <div class="card-body">
+          <h3>Indio Comido</h3>
+          <div class="where">Calle Travieso, Triana</div>
+          <p>Recommended for cocktails.</p>
+          <div class="tip">But not necessarily for food!</div>
+          <a class="link" href="https://indiocomido.es/" target="_blank" rel="noopener">See the bar <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/pier19.jpg" alt="A beautifully presented prawn dish at Pier 19" loading="lazy">
+          <span class="tag">At the port</span>
+        </div>
+        <div class="card-body">
+          <h3>Pier 19</h3>
+          <div class="where">The port, Las Palmas</div>
+          <p>Great food with a view over the port.</p>
+          <div class="tip">We like drinking the Celeste Crianza.</div>
+          <a class="link" href="https://pier19.es/#galeria" target="_blank" rel="noopener">See the gallery <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/toma-pan-y-moja.jpg" alt="A tapa and a glass of red wine on the Las Canteras promenade at sunset" style="object-position: center 65%;" loading="lazy">
+          <span class="tag">Tapas</span>
+        </div>
+        <div class="card-body">
+          <h3>Toma Pan y Moja</h3>
+          <div class="where">Paseo de Las Canteras, on the beachfront</div>
+          <p>A typical tapas place &mdash; not a tourist trap like many others are.</p>
+          <a class="link" href="https://www.instagram.com/tomapanlascanteras/" target="_blank" rel="noopener">See them on Instagram <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/monte-libano.jpg" alt="Brass Lebanese coffee pots on a table in front of patterned tiles at Monte Líbano" loading="lazy">
+          <span class="tag">Lebanese</span>
+        </div>
+        <div class="card-body">
+          <h3>Monte Líbano</h3>
+          <div class="where">Paseo de Las Canteras, on the beachfront</div>
+          <p>We love this Lebanese for its relaxed atmosphere and great food.</p>
+          <a class="link" href="https://montelibano.es/en/home_en" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="area" id="eat-the-south">
+      <h3 class="area-title">The south</h3>
+      <p class="area-sub">Around Maspalomas and San Agustín.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="card-img">
+          <div class="illustration" role="img" aria-label="Illustrated sunset over the sea">Loopy's</div>
+          <span class="tag">Casual</span>
+        </div>
+        <div class="card-body">
+          <h3>Loopy's</h3>
+          <div class="where">San Agustín</div>
+          <p>Nothing fancy, but fun and friendly.</p>
+          <a class="link" href="https://www.google.com/search?q=loopys+san+agustin" target="_blank" rel="noopener">Look it up <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/piccola-italia.jpg" alt="A plate of seafood pasta at Piccola Italia" loading="lazy">
+          <span class="tag">Italian</span>
+        </div>
+        <div class="card-body">
+          <h3>Piccola Italia</h3>
+          <div class="where">San Agustín shopping centre</div>
+          <p>A great Italian if you're in the area or visiting San Agustín beach.</p>
+          <a class="link" href="https://www.ristorantepiccolaitalia.com/uk/index.html" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/samsara.jpg" alt="The ornate turquoise and red doors at Samsara, surrounded by plants" loading="lazy">
+          <span class="tag">Asian</span>
+        </div>
+        <div class="card-body">
+          <h3>Samsara</h3>
+          <div class="where">Maspalomas, by the palm grove &amp; dunes</div>
+          <p>Great for Asian cuisine in the south.</p>
+          <a class="link" href="https://www.samsara-gc.com/en-gb" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">
+          <img src="images/time.jpg" alt="Time's terrace dining room looking out onto palm trees" loading="lazy">
+          <span class="tag">Italian</span>
+        </div>
+        <div class="card-body">
+          <h3>Time</h3>
+          <div class="where">Avenida Oasis, Maspalomas</div>
+          <p>Recommended for home-made pasta.</p>
+          <a class="link" href="https://www.timefoodshop.es/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="area" id="eat-the-north">
+      <h3 class="area-title">The north</h3>
+      <p class="area-sub">Worth the drive.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="card-img">
+          <img src="images/la-caldosa.jpg" alt="Seafront terrace at La Caldosa restaurant looking out to the waves" loading="lazy">
+          <span class="tag">Seafood</span>
+        </div>
+        <div class="card-body">
+          <h3>La Caldosa</h3>
+          <div class="where">Gáldar</div>
+          <p>A seafront restaurant right by the waves on the north coast &mdash; well worth the trip when you're in Gáldar. Combine with a visit to the rock pool.</p>
+          <a class="link" href="https://restaurante.covermanager.com/restaurante-la-caldosa/" target="_blank" rel="noopener">See the restaurant <span>&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="sign">Have a wonderful time! &mdash; Stephen &amp; Silvia</div>
+  Photos courtesy of the linked websites: grancanaria.com, hellocanaryislands.com, villagrancanaria.com, Barceló Santa Catalina, Real Club Náutico, La Caldosa, Vinófilos, Pier 19, Museo Elder, Gran Karting Club, Manuela Jimena, Qué Leche, Indio Comido, Piccola Italia, Samsara, Time and Monte Líbano. Midway photo from nuestrograndestino.es; Deliciosa Marta photo from localguidegrancanaria.com; Toma Pan y Moja photo from liveitup-laspalmas.com.
+</footer>
+
+</body>
+</html>
